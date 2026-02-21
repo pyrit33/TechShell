@@ -8,4 +8,4 @@ A bash-like shell programmed in C
   - git clone https://github.com/pyrit33/TechShell.git
   - gcc TechShell.c -o TechShell
   - ./TechShell.c
-* The program does not have redirection functionality. It also only changed the directory to the home directory. All other commands should work.
+* The program does not have redirection functionality. It also only changes the directory to the home directory. All other commands should work.
