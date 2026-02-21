@@ -16,7 +16,7 @@
 // functional prototyping
 void displayPrompt();
 char* getInput();
-void exectueSimpleCommand(char* command);
+void executeSimpleCommand(char* command);
 char** parseInput(char* input, char* args[]);
 void executeCommand(char** command);
 
@@ -40,7 +40,7 @@ int main(){
         }
 
         // ignore blank spaces
-        if (strcmp(input, " \n") == 0){
+        if (strcmp(input, "\n") == 0){
             continue;
         }
 
@@ -48,7 +48,7 @@ int main(){
         input[strcspn(input, "\n")] = '\0';
 
         // simple commands taken care of
-        if (strcmp(input, "cd") == 0 || strcmp(input, "pwd") == 0 || strcmp(input, "help" == 0)){
+        if (strcmp(input, "cd") == 0 || strcmp(input, "pwd") == 0 || strcmp(input, "help") == 0)){
             executeSimpleCommand(input);
             continue;
         }
@@ -64,7 +64,7 @@ int main(){
 }
 
 // function to display the prompt (contains username, hostname, and cwd)
-displayPrompt(){
+void displayPrompt(){
     char cwd[MAX_CMD_SIZE];
     char* username = getenv("USER");
     char* hostname;
@@ -86,13 +86,13 @@ char* getInput(){
 // for early access to simple commands before parsing
 // takes the user's input and completes the command (if it's one of the simple commands)
 void executeSimpleCommand(char* command){
-    char* SimpleCommands[MAX_SMPLCMDS];
+    char* SimpleCommands[MAX_SMPL_CMDS];
     int switchCounter = 0;
 
     // array with simple commands
     SimpleCommands[0] = "pwd";
     SimpleCommands[1] = "help";
-    SimpleCommand[2] = "cd";
+    SimpleCommands[2] = "cd";
 
     // finds command that matches input
     for (int i = 0; i < NUM_SMPL_CMDS; i++){
@@ -113,7 +113,7 @@ void executeSimpleCommand(char* command){
             printf("Valid commands: 'pwd' 'cd', 'ls' 'ls -l', etc");
             break;
         case 3: // cd
-            chdir(genenv("HOME"));
+            chdir(getenv("HOME"));
             break;
         default:
             printf("Command '%s' not found\nTry using 'help' for a list of valid commands.\n", command);
@@ -134,7 +134,7 @@ char** parseInput(char* input, char* args[]){
 
     // tokenize input by spaces
     token = strtok(input, " ");
-    while (token != NULL && i < MAX_CMD_SIZE - 1){
+    while (token != NULL && i < MAX_ARG_SIZE - 1){
         args[i++] = token;
         token = strtok(NULL, " ");
     }
@@ -162,4 +162,5 @@ void executeCommand(char** args){
     } else {
         perror("Failed to fork.\n");
     }
+
 }
